@@ -23,28 +23,23 @@ function Game(players, dice){
 
 Game.prototype.getRoll = function(){
     this.dice.randomRoll()
-    console.log(this.dice.roll);
     if (this.dice.roll === 1){
       this.currentPlayer.turnScore = 0;
       this.endTurn();
     } else {
       this.currentPlayer.turnScore += this.dice.roll;
-      console.log(this.currentPlayer.turnScore);
     }
 }
 
 Game.prototype.endTurn = function(){
   this.currentPlayer.overallScore += this.currentPlayer.turnScore;
   this.currentPlayer.turnScore = 0;
-  console.log("current player's overall score: " + this.currentPlayer.overallScore);
   if (this.currentPlayer.overallScore >= 100){
-    console.log("you win!");
     this.win = this.currentPlayer;
   } else {
     var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
     currentPlayerIndex = 1 - currentPlayerIndex;
     this.currentPlayer = this.players[currentPlayerIndex];
-    console.log(currentPlayerIndex);
   }
 }
 
@@ -87,6 +82,7 @@ $(document).ready(function(){
   }
 
   function rollDicePics(){
+    $("#youWon").empty();
     var diceArray = ["die1.png", "die2.png", "die3.png", "die4.png", "die5.png", "die6.png"];
     $("#roll-img").addClass("animated infinite wobble");
     var diceImg;
@@ -104,8 +100,10 @@ $(document).ready(function(){
       $("#roll-img").attr("src", diceImg);
       $("#turn-score").text("Total this turn: " + game.currentPlayer.turnScore);
       if(game.dice.roll === 1){
-        alert("Whoops you rolled a one, loser");
-        switchPlayer();
+        $("#youWon").html("<h1>Whoops you rolled a one, loser</h1>");
+        $("#roll-img").on('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e) {
+          switchPlayer();
+        });
       }
     }, 1000);
   }
