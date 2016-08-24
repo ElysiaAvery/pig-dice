@@ -1,5 +1,6 @@
 //<!-- Back End -->
-function Player (){
+function Player (name){
+  this.name = name;
   this.turnScore = 0;
   this.overallScore = 0;
 }
@@ -34,10 +35,11 @@ Game.prototype.getRoll = function(){
 
 Game.prototype.endTurn = function(){
   this.currentPlayer.overallScore += this.currentPlayer.turnScore;
+  this.currentPlayer.turnScore = 0;
   console.log("current player's overall score: " + this.currentPlayer.overallScore);
   if (this.currentPlayer.overallScore >= 100){
     console.log("you win!");
-    this.win = currentPlayer;
+    this.win = this.currentPlayer;
   } else {
     var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
     currentPlayerIndex = 1 - currentPlayerIndex;
@@ -49,8 +51,56 @@ Game.prototype.endTurn = function(){
 
 //<!-- Front End  -->
 $(document).ready(function(){
-  $("form#inputForm").submit(function(event){
-    event.preventDefault();
+  var player1, player2, die1, game;
+  $("#start-game").click(function(){
+    toggleButtons();
+    player1 = new Player("Player 1");
+    player2 = new Player("Player 2");
+    die1 = new Dice();
+    game = new Game([player1, player2], die1);
+    updateScores();
+    switchPlayer();
+    $(".toHide").show();
+  });
 
+  function toggleButtons(){
+    $("#roll-game").prop('disabled', function( i, val ) {
+      return !val;
+    });
+    $("#hold-game").prop('disabled', function( i, val ) {
+      return !val;
+    });
+  }
+
+  function switchPlayer(){
+    $("#roll-result").text("Press the 'Roll' button to roll the die!");
+    $("#current-player").text("Current Player: " + game.currentPlayer.name);
+    $("#turn-score").text(game.currentPlayer.turnScore);
+  }
+
+  function updateScores(){
+    $("#player1score").text(game.players[0].overallScore);
+    $("#player2score").text(game.players[1].overallScore);
+  }
+
+  $("#roll-game").click(function(){
+    game.getRoll();
+    $("#roll-result").text(game.dice.roll);
+    $("#turn-score").text(game.currentPlayer.turnScore);
+    if(game.dice.roll === 1){
+      alert("Whoops you rolled a one, loser");
+      switchPlayer();
+    }
+  });
+
+  $("#hold-game").click(function(){
+    game.endTurn();
+    updateScores();
+    if(game.win){
+      alert("Congratulations " + game.win.name + ", you won! Good job.");
+      $(".toHide").hide();
+      toggleButtons();
+    }
+    switchPlayer();
   });
 });

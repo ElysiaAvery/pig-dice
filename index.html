@@ -7,7 +7,7 @@
     <script src='js/jquery-3.1.0.js'></script>
     <script src='js/bootstrap.min.js' type='text/javascript'></script>
     <script src='js/scripts.js'></script>
-    <title>Template</title>
+    <title>Pig Dice</title>
   </head>
   <body>
 
@@ -16,14 +16,16 @@
       <div class="row">
         <div class="col-md-8">
           <h1>Pig Dice</h1>
-          <h2 id="roll-result"></h2>
-          <h3 id="current-player"></h3>
-          <h3 id="turn-score"></h3>
+          <div class="toHide">
+            <h2 id="roll-result"></h2>
+            <h3 id="current-player"></h3>
+            <h3 id="turn-score"></h3>
+          </div>
           <button id="start-game" name="button" class="btn btn-primary">Start Game / End Game</button>
-          <button id="roll-game" name="button" class="btn btn-warning">Roll</button>
-          <button id="hold-game" name="button" class="btn btn-success">Hold Dice</button>
+          <button id="roll-game" name="button" class="btn btn-warning" disabled>Roll</button>
+          <button id="hold-game" name="button" class="btn btn-success" disabled>Hold Dice</button>
         </div>
-        <div class="col-md-4">
+        <div class="toHide col-md-4">
           <h1>Player 1</h1>
           <h3>Player 1 Score</h3>
           <h4 id="player1score"></h4>
