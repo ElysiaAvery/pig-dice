@@ -26,8 +26,8 @@ hr:before { /* Not really supposed to work, but does */
 .turn-button {
   display: block;
   width: 100%;
-  margin-top: 5%;
-  margin-bottom: 10%;
+  margin-top: 2rem;
+  margin-bottom: 3rem;
 }
 
 .center-text {
@@ -43,7 +43,7 @@ body {
 .center-button {
   display:block;
   margin: 0 auto;
-  margin-top: 5%;
+  margin-top: 2rem;
 }
 
 img#roll-img {
@@ -53,4 +53,16 @@ img#roll-img {
 
 div#rules {
   text-align: left;
+}
+
+/***** Media Queries ****/
+
+@media screen and (max-width: 768px) {
+  h1, h2 {
+    font-size: 1.5em;
+  }
+
+  .mobile-inline h1, h2{
+    display: inline;
+  }
 }
