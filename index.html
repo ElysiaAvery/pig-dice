@@ -13,15 +13,24 @@
 
     <!-- Simple Form Input for Testing -->
     <div class="container">
-      <h1>Form Input</h1>
-      <form id="inputForm">
-        <div class="form-group">
-          <label for="input">Enter input</label>
-          <input id="input" class="form-control" type="text">
+      <div class="row">
+        <div class="col-md-8">
+          <h1>Pig Dice</h1>
+          <h2 id="roll-result"></h2>
+          <h3 id="current-player"></h3>
+          <h3 id="turn-score"></h3>
+          <button id="start-game" name="button" class="btn btn-primary">Start Game / End Game</button>
+          <button id="roll-game" name="button" class="btn btn-warning">Roll</button>
+          <button id="hold-game" name="button" class="btn btn-success">Hold Dice</button>
         </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
-      </form>
-      <div id="result">
+        <div class="col-md-4">
+          <h1>Player 1</h1>
+          <h3>Player 1 Score</h3>
+          <h4 id="player1score"></h4>
+          <h1>Player 2</h1>
+          <h3>Player 2 Score</h3>
+          <h4 id="player2score"></h4>
+        </div>
       </div>
     </div>
 
