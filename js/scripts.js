@@ -20,12 +20,22 @@ function Game(players, dice){
 }
 
 Game.prototype.getRoll = function(){
-    if (this.dice.randomRoll() === 1){
-      this.currentPlayer.turnScore === 0;
+    this.dice.randomRoll()
+    console.log(this.dice.roll);
+    if (this.dice.roll === 1){
+      this.currentPlayer.turnScore = 0;
+      this.endTurn();
     } else {
       this.currentPlayer.turnScore += this.dice.roll;
+      console.log(this.currentPlayer.turnScore);
     }
 }
+
+Game.prototype.endTurn = function(){
+  this.currentPlayer.overallScore += this.currentPlayer.turnScore;
+  console.log("current player's overall score: " + this.currentPlayer.overallScore);
+}
+
 
 //<!-- Front End  -->
 $(document).ready(function(){
