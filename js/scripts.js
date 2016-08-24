@@ -17,6 +17,7 @@ function Game(players, dice){
   this.players = players;
   this.currentPlayer = this.players[0];
   this.dice = dice;
+  this.win;
 }
 
 Game.prototype.getRoll = function(){
@@ -34,6 +35,15 @@ Game.prototype.getRoll = function(){
 Game.prototype.endTurn = function(){
   this.currentPlayer.overallScore += this.currentPlayer.turnScore;
   console.log("current player's overall score: " + this.currentPlayer.overallScore);
+  if (this.currentPlayer.overallScore >= 100){
+    console.log("you win!");
+    this.win = currentPlayer;
+  } else {
+    var currentPlayerIndex = this.players.indexOf(this.currentPlayer);
+    currentPlayerIndex = 1 - currentPlayerIndex;
+    this.currentPlayer = this.players[currentPlayerIndex];
+    console.log(currentPlayerIndex);
+  }
 }
 
 
