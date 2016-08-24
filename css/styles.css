@@ -2,10 +2,32 @@
   display: none;
 }
 
+/* Flaired edges, by Tomas Theunissen */
+
+hr {
+    height: 30px;
+    border-style: solid;
+    border-color: yellow;
+    border-width: 1px 0 0 0;
+    border-radius: 20px;
+}
+hr:before { /* Not really supposed to work, but does */
+    display: block;
+    content: "";
+    height: 30px;
+    margin-top: -31px;
+    border-style: solid;
+    border-color: yellow;
+    border-width: 0 0 1px 0;
+    border-radius: 20px;
+}
+
+
 .turn-button {
   display: block;
   width: 100%;
   margin-top: 5%;
+  margin-bottom: 10%;
 }
 
 .center-text {
@@ -27,4 +49,8 @@ body {
 img#roll-img {
   display:block;
   margin: 0 auto;
+}
+
+div#rules {
+  text-align: left;
 }

@@ -107,7 +107,7 @@ $(document).ready(function(){
         alert("Whoops you rolled a one, loser");
         switchPlayer();
       }
-    }, 3000);
+    }, 1000);
   }
 
   $("#roll-game").click(rollDicePics);
@@ -116,9 +116,20 @@ $(document).ready(function(){
     game.endTurn();
     updateScores();
     if(game.win){
-      alert("Congratulations " + game.win.name + ", you won! Good job.");
-      toggleButtons();
+      $("#youWon").html("<h2>Congratulations " + game.win.name + ", you won! Good job.</h2>");
+      $("#roll-img").removeClass("bounce");
+      $("#roll-img").addClass("flip");
+      $("#roll-img").on('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e) {
+        var myTimeout = setTimeout(function(){
+          gameStart = !gameStart;
+          $("#youWon").empty();
+          toggleButtons();
+          $("#roll-img").removeClass("flip");
+        }, 4000);
+      });
+      //toggleButtons();
+    } else {
+      switchPlayer();
     }
-    switchPlayer();
   });
 });
