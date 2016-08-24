@@ -21,7 +21,6 @@ Program will create a game object that holds the player and die objects.
 * Example Output: game{player1, player2, die}
 
 On a die roll of one, the current player's turn score = 0
-Program will create a die that can roll 1-6
 * Example Input: 1
 * Example Output: player1.turnscore = 0
 

@@ -13,6 +13,18 @@ Dice.prototype.randomRoll = function(){
   return this.roll;
 }
 
+function Game(players, dice){
+  this.players = players;
+  this.currentPlayer = this.players[0];
+  this.dice = dice;
+}
+
+Game.prototype.getRoll = function(){
+    if (this.dice.randomRoll() === 1){
+      this.currentPlayer.turnScore === 0;
+    }
+}
+
 //<!-- Front End  -->
 $(document).ready(function(){
   $("form#inputForm").submit(function(event){
