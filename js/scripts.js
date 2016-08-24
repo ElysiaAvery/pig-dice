@@ -51,19 +51,22 @@ Game.prototype.endTurn = function(){
 
 //<!-- Front End  -->
 $(document).ready(function(){
-  var player1, player2, die1, game;
+  var player1, player2, die1, game, gameStart = false;
   $("#start-game").click(function(){
     toggleButtons();
-    player1 = new Player("Player 1");
-    player2 = new Player("Player 2");
-    die1 = new Dice();
-    game = new Game([player1, player2], die1);
-    updateScores();
-    switchPlayer();
-    $(".toHide").show();
+    gameStart = !gameStart;
+    if(gameStart){
+      player1 = new Player("Player 1");
+      player2 = new Player("Player 2");
+      die1 = new Dice();
+      game = new Game([player1, player2], die1);
+      updateScores();
+      switchPlayer();
+    }
   });
 
   function toggleButtons(){
+    $(".toHide").toggle();
     $("#roll-game").prop('disabled', function( i, val ) {
       return !val;
     });
@@ -98,7 +101,6 @@ $(document).ready(function(){
     updateScores();
     if(game.win){
       alert("Congratulations " + game.win.name + ", you won! Good job.");
-      $(".toHide").hide();
       toggleButtons();
     }
     switchPlayer();
