@@ -22,6 +22,8 @@ function Game(players, dice){
 Game.prototype.getRoll = function(){
     if (this.dice.randomRoll() === 1){
       this.currentPlayer.turnScore === 0;
+    } else {
+      this.currentPlayer.turnScore += this.dice.roll;
     }
 }
 
