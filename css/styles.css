@@ -1,3 +1,30 @@
 .toHide {
   display: none;
 }
+
+.turn-button {
+  display: block;
+  width: 100%;
+  margin-top: 5%;
+}
+
+.center-text {
+  text-align: center;
+}
+
+body {
+  background-color: black;
+  color: yellow;
+  font-family: monospace;
+}
+
+.center-button {
+  display:block;
+  margin: 0 auto;
+  margin-top: 5%;
+}
+
+img#roll-img {
+  display:block;
+  margin: 0 auto;
+}

@@ -76,9 +76,9 @@ $(document).ready(function(){
   }
 
   function switchPlayer(){
-    $("#roll-result").text("Press the 'Roll' button to roll the die!");
+    //$("#roll-result").text("Press the 'Roll' button to roll the die!");
     $("#current-player").text("Current Player: " + game.currentPlayer.name);
-    $("#turn-score").text(game.currentPlayer.turnScore);
+    $("#turn-score").text("Total this turn: " + game.currentPlayer.turnScore);
   }
 
   function updateScores(){
@@ -86,15 +86,31 @@ $(document).ready(function(){
     $("#player2score").text(game.players[1].overallScore);
   }
 
-  $("#roll-game").click(function(){
-    game.getRoll();
-    $("#roll-result").text(game.dice.roll);
-    $("#turn-score").text(game.currentPlayer.turnScore);
-    if(game.dice.roll === 1){
-      alert("Whoops you rolled a one, loser");
-      switchPlayer();
-    }
-  });
+  function rollDicePics(){
+    var diceArray = ["die1.png", "die2.png", "die3.png", "die4.png", "die5.png", "die6.png"];
+    $("#roll-img").addClass("animated infinite wobble");
+    var diceImg;
+    var myInterval = setInterval(function(){
+      var diceIndex = Math.floor(Math.random()*6);
+      diceImg = "img/" + diceArray[diceIndex];
+      $("#roll-img").attr("src", diceImg);
+    }, 250);
+    var myTimeout = setTimeout(function(){
+      clearInterval(myInterval);
+      $("#roll-img").removeClass("infinite wobble");
+      $("#roll-img").addClass("bounce");
+      game.getRoll();
+      diceImg = "img/" + diceArray[game.dice.roll-1];
+      $("#roll-img").attr("src", diceImg);
+      $("#turn-score").text("Total this turn: " + game.currentPlayer.turnScore);
+      if(game.dice.roll === 1){
+        alert("Whoops you rolled a one, loser");
+        switchPlayer();
+      }
+    }, 3000);
+  }
+
+  $("#roll-game").click(rollDicePics);
 
   $("#hold-game").click(function(){
     game.endTurn();

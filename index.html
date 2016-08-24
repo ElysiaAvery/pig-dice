@@ -2,6 +2,7 @@
 <html>
   <head>
     <link href='css/bootstrap.min.css' rel='stylesheet' type='text/css'>
+    <link href='css/animate.css' rel='stylesheet' type='text/css'>
     <link href='css/bootstrap-theme.min.css' rel='stylesheet' type='text/css'>
     <link href='css/styles.css' rel='stylesheet' type='text/css'>
     <script src='js/jquery-3.1.0.js'></script>
@@ -13,28 +14,28 @@
 
     <!-- Simple Form Input for Testing -->
     <div class="container">
+      <div class="heading">
+        <img src="img/title.png" class="img-responsive">
+      </div>
       <div class="row">
         <div class="col-md-8">
-          <h1>Pig Dice</h1>
           <div class="toHide">
-            <h2 id="roll-result"></h2>
-            <h3 id="current-player"></h3>
-            <h3 id="turn-score"></h3>
+            <div id="roll-result"><img id="roll-img" class="img-responsive" src="img/die1.png"></div>
+            <h1 id="current-player"></h1>
+            <h1 id="turn-score"></h1>
           </div>
-          <button id="start-game" name="button" class="btn btn-primary">Start Game / End Game</button>
-          <button id="roll-game" name="button" class="btn btn-warning" disabled>Roll</button>
-          <button id="hold-game" name="button" class="btn btn-success" disabled>Hold Dice</button>
         </div>
-        <div class="toHide col-md-4">
+        <div class="toHide col-md-4 center-text">
           <h1>Player 1</h1>
-          <h3>Player 1 Score</h3>
-          <h4 id="player1score"></h4>
+          <h2 id="player1score"></h2>
           <h1>Player 2</h1>
-          <h3>Player 2 Score</h3>
-          <h4 id="player2score"></h4>
+          <h2 id="player2score"></h2>
+          <button id="roll-game" name="button" class="btn btn-lg turn-button" disabled>Roll</button>
+          <button id="hold-game" name="button" class="btn btn-lg turn-button" disabled>Hold Dice</button>
         </div>
-      </div>
-    </div>
+      </div><!--end row-->
+      <button id="start-game" name="button" class="center-button btn btn-lg">Start Game / End Game</button>
+    </div><!--end container-->
 
   </body>
 </html>
