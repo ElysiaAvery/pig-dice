@@ -1,0 +1,19 @@
+1. die roll (random # 1-6)
+2. players - ongoing score, turn score
+3. 2 players
+4. Play - game start, player score = 0 --> (later) first turn: alphabetical? die roll? older? Players input their names? Specify number of games.
+5. Turn: (see 1) on a one - turn ends, any other number: + to turn score.
+6. for each roll, a player needs a hold or go on button (roll and hold buttons)
+7. On 1 or on Hold -> player switch
+8. players should be objects --> properties: (see #2) later: name
+8a. Game needs to check for win: Game = object with check for win function
+8b. dice should be objects
+9. Ability to play multiple games? (later)
+10. Win = player reaches 100 points
+11. win check: at end of turn (see 7)
+12: main display: roll + hold button + display of what was rolled. player's turn score (updated every roll)
+13: main display: some sort of indication that the turn has ended (see 7)
+13a: die roll animation??? (later)
+14: ongoing side display: total values for each player (updated at the end of the turn) (including number of games won)
+15. Two dice: single 1: + 0 to total score, turn ends, double 1: entire score = 0, turn ends, other double: + total to turn score, players MUST go again (disable hold button)
+16. The game mocks you if you are playing with 2 dice and get 2 ones. Like a lot. 
