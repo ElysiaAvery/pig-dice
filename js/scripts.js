@@ -247,12 +247,12 @@ $(document).ready(function(){
       else {
         if(game.currentPlayer.isComputer){
           if(game.doubleDice && game.dice[0].roll === game.dice[1].roll){
-            setTimeout(rollDicePics, 2000);
+            setTimeout(rollDicePics, 1500);
           }
           else if(game.currentPlayer.rollYN()){
-            setTimeout(rollDicePics, 2000);
+            setTimeout(rollDicePics, 1500);
           } else {
-            setTimeout(holdDice, 2000);
+            setTimeout(holdDice, 1500);
           }
         } else if(game.doubleDice && game.dice[0].roll === game.dice[1].roll){
           $("#hold-game").prop('disabled', function( i, val ) {
