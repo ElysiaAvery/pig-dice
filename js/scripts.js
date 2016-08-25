@@ -5,6 +5,24 @@ function Player (name){
   this.overallScore = 0;
 }
 
+function ComputerPlayer(){
+  var evilArray = ["Lore", "HAL 9000", "Brainiac", "Ash", "T-1000", "Roy Batty", "Mechagodzilla", "ED-209", "David"]
+  this.name = evilArray[Math.floor(Math.random() * evilArray.length)];
+  this.turnScore = 0;
+  this.overallScore = 0;
+  this.isComputer = true;
+}
+
+ComputerPlayer.prototype.rollYN = function(){
+  var decide = Math.round(Math.random());
+  //true = roll
+  if(decide){
+    return true;
+  } else{
+    return false;
+  }
+}
+
 function Dice(){
   this.roll = 0;
 }
@@ -68,13 +86,18 @@ $(document).ready(function(){
     $("#player1-name").val();
     $("#player2-name").val();
     var player1Modal = $("#player1-name").val();
-    var player2Modal = $("#player2-name").val();
     game.players[0].name = player1Modal;
-    game.players[1].name = player2Modal;
+    if($("#computer-check").is(":checked")){
+      game.players[1] = new ComputerPlayer();
+      console.log(game.players);
+    } else {
+      var player2Modal = $("#player2-name").val();
+      game.players[1].name = player2Modal;
+    }
     $('#startModal').modal('hide');
     switchPlayer();
-    $("#player1").text(player1Modal);
-    $("#player2").text(player2Modal);
+    $("#player1").text(game.players[0].name);
+    $("#player2").text(game.players[1].name);
     $("#game-modal")[0].reset();
     console.log(game.players);
   });
@@ -93,6 +116,9 @@ $(document).ready(function(){
     //$("#roll-result").text("Press the 'Roll' button to roll the die!");
     $("#current-player").text("Current Player: " + game.currentPlayer.name);
     $("#turn-score").text("Total this turn: " + game.currentPlayer.turnScore);
+    if(game.currentPlayer.isComputer){
+      rollDicePics();
+    }
   }
 
   function updateScores(){
@@ -124,12 +150,17 @@ $(document).ready(function(){
           switchPlayer();
         });
       }
+      else if(game.currentPlayer.isComputer){
+        if(game.currentPlayer.rollYN()){
+          setTimeout(rollDicePics, 2000);
+        } else {
+          setTimeout(holdDice, 2000);
+        }
+      }
     }, 1000);
   }
 
-  $("#roll-game").click(rollDicePics);
-
-  $("#hold-game").click(function(){
+  function holdDice(){
     game.endTurn();
     updateScores();
     if(game.win){
@@ -148,5 +179,9 @@ $(document).ready(function(){
     } else {
       switchPlayer();
     }
-  });
+  }
+
+  $("#roll-game").click(rollDicePics);
+
+  $("#hold-game").click(holdDice);
 });
