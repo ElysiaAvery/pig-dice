@@ -47,14 +47,12 @@ function Game(players, dice){
 
 Game.prototype.endGame = function(){
   this.gamesCount++;
-  var winningPlayer = this.win;
-  this.players.forEach(function(player, winningPlayer){
+  this.players.forEach(function(player){
+    if(player.overallScore >= 10){
+      player.gamesWon++;
+    }
     player.turnScore = 0;
     player.overallScore = 0;
-    if(player === winningPlayer){
-      player.gamesWon++;
-      console.log(player.name + " games won: " + player.gamesWon);
-    }
   });
   this.currentPlayer = this.players[0];
   this.win = "";
@@ -108,7 +106,7 @@ $(document).ready(function(){
     $("#player2-name").val();
     var player1Modal = $("#player1-name").val();
     game.players[0].name = player1Modal;
-    if($("#computer-check").is(":checked")){
+    if($("#computer-check").is(":checked") || !$("#player2-name").val()){
       game.players[1] = new ComputerPlayer();
       console.log(game.players);
     } else {
