@@ -37,12 +37,13 @@ Dice.prototype.randomRoll = function(){
   return this.roll;
 }
 
-function Game(players, dice){
+function Game(players, dice, doubleDice){
   this.players = players;
   this.currentPlayer = this.players[0];
   this.dice = dice;
   this.win;
   this.gamesCount = 1;
+  this.doubleDice = doubleDice;
 }
 
 Game.prototype.endGame = function(){
@@ -59,13 +60,34 @@ Game.prototype.endGame = function(){
 }
 
 Game.prototype.getRoll = function(){
-    this.dice.randomRoll()
-    if (this.dice.roll === 1){
-      this.currentPlayer.turnScore = 0;
-      this.endTurn();
+    this.dice.forEach(function(die){
+      die.randomRoll();
+    })
+    var turnEnd = false;
+    if(!this.doubleDice){
+      if (this.dice[0].roll === 1){
+        this.currentPlayer.turnScore = 0;
+        this.endTurn();
+        turnEnd = true;
+      } else {
+        this.currentPlayer.turnScore += this.dice[0].roll;
+      }
     } else {
-      this.currentPlayer.turnScore += this.dice.roll;
+      if (this.dice[0].roll === 1 && this.dice[1].roll === 1){
+        this.currentPlayer.overallScore = 0;
+        this.currentPlayer.turnScore = 0;
+        this.endTurn();
+        turnEnd = true;
+      }
+      else if (this.dice[0].roll === 1 || this.dice[1].roll === 1){
+        this.currentPlayer.turnScore = 0;
+        this.endTurn();
+        turnEnd = true;
+      } else {
+        this.currentPlayer.turnScore += (this.dice[0].roll + this.dice[1].roll);
+      }
     }
+    return turnEnd;
 }
 
 Game.prototype.endTurn = function(){
@@ -92,7 +114,7 @@ $(document).ready(function(){
       player1 = new Player("Player 1");
       player2 = new Player("Player 2");
       die1 = new Dice();
-      game = new Game([player1, player2], die1);
+      game = new Game([player1, player2], [die1]);
       $("#player1").text("Player 1:");
       $("#player2").text("Player 2:");
       updateScores();
@@ -108,17 +130,19 @@ $(document).ready(function(){
     game.players[0].name = player1Modal;
     if($("#computer-check").is(":checked") || !$("#player2-name").val()){
       game.players[1] = new ComputerPlayer();
-      console.log(game.players);
     } else {
       var player2Modal = $("#player2-name").val();
       game.players[1].name = player2Modal;
+    }
+    if($("#doubleDice").is(":checked")){
+      game.doubleDice = true;
+      game.dice.push(new Dice());
     }
     $('#startModal').modal('hide');
     switchPlayer();
     $("#player1").text(game.players[0].name+":");
     $("#player2").text(game.players[1].name+":");
     $("#game-modal")[0].reset();
-    console.log(game.players);
   });
 
   function toggleButtons(){
@@ -159,22 +183,32 @@ $(document).ready(function(){
       clearInterval(myInterval);
       $("#roll-img").removeClass("infinite wobble");
       $("#roll-img").addClass("bounce");
-      game.getRoll();
-      diceImg = "img/" + diceArray[game.dice.roll-1];
+      var turnEnd = game.getRoll();
+      diceImg = "img/" + diceArray[game.dice[0].roll-1];
       $("#roll-img").attr("src", diceImg);
       $("#turn-score").text("Total this turn: " + game.currentPlayer.turnScore);
-      if(game.dice.roll === 1){
+      if(turnEnd){
         $("#youWon").html("<h1>Whoops you rolled a one, loser</h1>");
         $("#roll-img").on('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e) {
           switchPlayer();
           $("#roll-img").off('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd');
         });
       }
-      else if(game.currentPlayer.isComputer){
-        if(game.currentPlayer.rollYN()){
-          setTimeout(rollDicePics, 2000);
-        } else {
-          setTimeout(holdDice, 2000);
+      else {
+        if(game.dice[0].roll === game.dice[1].roll){
+          $("#hold-game").prop('disabled', function( i, val ) {
+            return !val;
+          });
+        }
+        if(game.currentPlayer.isComputer){
+          if(game.dice[0].roll === game.dice[1].roll){
+            setTimeout(rollDicePics, 2000);
+          }
+          else if(game.currentPlayer.rollYN()){
+            setTimeout(rollDicePics, 2000);
+          } else {
+            setTimeout(holdDice, 2000);
+          }
         }
       }
     }, 1000);
@@ -190,7 +224,6 @@ $(document).ready(function(){
       $("#roll-img").on('animationend webkitAnimationEnd MSAnimationEnd oAnimationEnd', function(e) {
         var endTimeout = setTimeout(function(){
           game.endGame();
-          console.log("Hello this is the endgame reset")
           $("#current-player").text("Current Player: " + game.currentPlayer.name);
           $("#turn-score").text("Total this turn: " + game.currentPlayer.turnScore);
           $("#youWon").empty();
@@ -209,7 +242,12 @@ $(document).ready(function(){
     }
   }
 
-  $("#roll-game").click(rollDicePics);
+  $("#roll-game").click(function(){
+    $("#hold-game").prop('disabled', function( i, val ) {
+      return false;
+    });
+    rollDicePics();
+  });
 
   $("#hold-game").click(holdDice);
 });
