@@ -50,7 +50,7 @@ body {
   color: black;
 }
 
-img#roll-img {
+img#roll-img, img#roll-img2 {
   display:block;
   margin: 0 auto;
 }

@@ -60,12 +60,14 @@
       <div class="heading">
         <img src="img/title.png" class="img-responsive">
       </div>
+      <button id="start-game" name="button" class="center-button btn btn-lg">Start Game / End Game</button>
       <h3 class="toHide center-text">Game #<span id="game-number">1</span></h3>
       <div class="row">
         <div class="col-md-8">
           <div class="toHide">
             <div id="roll-result"><img id="roll-img" class="img-responsive" src="img/die1.png"></div>
             <h1 id="current-player"></h1>
+            <p>Die one <span id="dice1out"></span> Die two: <span id="dice2out"></span></p>
             <h1 id="turn-score"></h1>
             <div id="youWon"></div>
           </div>
@@ -83,19 +85,9 @@
           <button id="hold-game" name="button" class="btn btn-lg turn-button" disabled>Hold Dice</button>
           <hr>
           <div id="rules">
-            <h4>Rules of Play: </h4>
-            <p>
-              Each turn, a player repeatedly rolls a die until either a 1 is rolled or the player decides to "hold":</p>
-            <ol>
-              <li>If the player rolls a 1, they score nothing and it becomes the next player's turn.</li>
-              <li>If the player rolls any other number, it is added to their turn total and the player's turn continues.</li>
-              <li>If a player chooses to "hold", their turn total is added to their score, and it becomes the next player's turn.</li>
-            </ol>
-            <p>The first player to score 100 or more points wins.</p>
           </div>
         </div>
       </div><!--end row-->
-      <button id="start-game" name="button" class="center-button btn btn-lg">Start Game / End Game</button>
     </div><!--end container-->
 
   </body>
