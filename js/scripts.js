@@ -51,13 +51,32 @@ $(document).ready(function(){
     toggleButtons();
     gameStart = !gameStart;
     if(gameStart){
+      $('#startModal').modal();
       player1 = new Player("Player 1");
       player2 = new Player("Player 2");
       die1 = new Dice();
       game = new Game([player1, player2], die1);
+      $("#player1").text("Player 1");
+      $("#player2").text("Player 2");
       updateScores();
       switchPlayer();
     }
+  });
+
+  $("#game-modal").submit(function(event){
+    event.preventDefault();
+    $("#player1-name").val();
+    $("#player2-name").val();
+    var player1Modal = $("#player1-name").val();
+    var player2Modal = $("#player2-name").val();
+    game.players[0].name = player1Modal;
+    game.players[1].name = player2Modal;
+    $('#startModal').modal('hide');
+    switchPlayer();
+    $("#player1").text(player1Modal);
+    $("#player2").text(player2Modal);
+    $("#game-modal")[0].reset();
+    console.log(game.players);
   });
 
   function toggleButtons(){

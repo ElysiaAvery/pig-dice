@@ -46,6 +46,10 @@ body {
   margin-top: 2rem;
 }
 
+#startModal {
+  color: black;
+}
+
 img#roll-img {
   display:block;
   margin: 0 auto;
