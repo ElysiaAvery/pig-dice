@@ -235,8 +235,6 @@ $(document).ready(function(){
         dice2Img = "img/" + dice2Array[game.dice[1].roll-1];
         $("#roll-img2").attr("src", dice2Img);
       }
-      $("#dice1out").text(game.dice[0].roll);
-      $("#dice2out").text(game.dice[1].roll);
       $("#turn-score").text("Total this turn: " + game.currentPlayer.turnScore);
       if(turnEnd){
         $("#youWon").html("<h1>Whoops you rolled a one, loser</h1>");
@@ -248,7 +246,7 @@ $(document).ready(function(){
       }
       else {
         if(game.currentPlayer.isComputer){
-          if(game.dice[0].roll === game.dice[1].roll){
+          if(game.doubleDice && game.dice[0].roll === game.dice[1].roll){
             setTimeout(rollDicePics, 2000);
           }
           else if(game.currentPlayer.rollYN()){
@@ -256,7 +254,7 @@ $(document).ready(function(){
           } else {
             setTimeout(holdDice, 2000);
           }
-        } else if(game.dice[0].roll === game.dice[1].roll){
+        } else if(game.doubleDice && game.dice[0].roll === game.dice[1].roll){
           $("#hold-game").prop('disabled', function( i, val ) {
             return !val;
           });
